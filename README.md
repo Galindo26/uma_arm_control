@@ -185,12 +185,12 @@ Aceleraciones:
 uma_arm_dynamics:
   ros__parameters:
     frequency: 1000.0
-    m1: 1.5
-    m2: 1.0
+    m1: 1.0
+    m2: 2.0
     l1: 1.0
     l2: 0.6
-    b1: 2.5
-    b2: 2.5
+    b1: 5.0
+    b2: 3.0
     g: 9.81
     q0: [0.785398, -0.785398]
 
@@ -201,3 +201,34 @@ Posición 2:
 Velocidades:
 
 Aceleraciones:
+
+### Experimento 4
+
+
+uma_arm_dynamics:
+  ros__parameters:
+    frequency: 1000.0
+    m1: 1.0
+    m2: 8.0
+    l1: 1.0
+    l2: 0.6
+    b1: 4.0
+    b2: 1.0
+    g: 9.81
+    q0: [0.785398, -0.785398]
+
+
+### Experimento 5
+
+
+uma_arm_dynamics:
+  ros__parameters:
+    frequency: 1000.0
+    m1: 7.0
+    m2: 1.0
+    l1: 1.0
+    l2: 0.6
+    b1: 4.0
+    b2: 2.0
+    g: 9.81
+    q0: [0.785398, -0.785398]
