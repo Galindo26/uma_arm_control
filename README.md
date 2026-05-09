@@ -131,6 +131,17 @@ $$ \mathbf{q} = \int \dot{\mathbf{q}} Dt \implies \mathbf{q}_{k+1} = \mathbf{q}_
 ## Representación gráfica
 
 ### Experimento 1
+uma_arm_dynamics:
+  ros__parameters:
+    frequency: 1000.0
+    m1: 3.0
+    m2: 2.0
+    l1: 1.0
+    l2: 0.6
+    b1: 5.0
+    b2: 5.0
+    g: 9.81
+    q0: [0.785398, -0.785398]
 ![alt text](image-5.png)
 
 ![alt text](image-6.png)
@@ -140,5 +151,26 @@ $$ \mathbf{q} = \int \dot{\mathbf{q}} Dt \implies \mathbf{q}_{k+1} = \mathbf{q}_
 ![alt text](image-4.png)
 
 ![alt text](image-2.png)
+
+### Experimento 2
+uma_arm_dynamics:
+  ros__parameters:
+    frequency: 1000.0
+    m1: 1.5
+    m2: 1.0
+    l1: 1.0
+    l2: 0.6
+    b1: 2.5
+    b2: 2.5
+    g: 9.81
+    q0: [0.785398, -0.785398]
+
+![alt text](image-7.png)
+
+![alt text](image-8.png)
+
+![alt text](image-9.png)
+
+![alt text](image-10.png)
 
 ### Experimento 2
