@@ -143,15 +143,15 @@ uma_arm_dynamics:
     g: 9.81
     q0: [0.785398, -0.785398]
     
-<table>
-  <tr>
-    <td><img src="image-5.png" alt="alt text" width="100%"></td>
-    <td><img src="image-6.png" alt="alt text" width="100%"></td>
-    <td><img src="image-3.png" alt="alt text" width="100%"></td>
-    <td><img src="image-4.png" alt="alt text" width="100%"></td>
-    <td><img src="image-2.png" alt="alt text" width="100%"></td>
-  </tr>
-</table>
+![alt text](image-5.png)
+
+![alt text](image-6.png)
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-2.png)
 
 ### Experimento 2
 uma_arm_dynamics:
