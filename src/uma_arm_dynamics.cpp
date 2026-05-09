@@ -127,27 +127,49 @@ private:
     {
 
         // Initialize M, C, Fb, g_vec, J, and tau_ext
+        Eigen::MatrixXd M(2, 2);
+        Eigen::VectorXd C(2);
+        Eigen::MatrixXd Fb(2, 2);
+        Eigen::VectorXd g_vec(2);
+        Eigen::MatrixXd J(2, 2);
+        Eigen::VectorXd tau_ext(2);
 
         // Initialize q1, q2, q_dot1, and q_dot2
+        double q1 = joint_positions_(0);
+        double q2 = joint_positions_(1);
+        double q_dot1 = joint_velocities_(0);
+        double q_dot2 = joint_velocities_(1);
 
         // Placeholder calculations for M, C, Fb, g, and tau_ext
         // Calculate matrix M
+        M(0, 0) = m1_ * pow(l1_, 2) + m2_ * (pow(l1_, 2) + 2 * l1_ * l2_ * cos(q2) + pow(l2_, 2));
+        M(0, 1) = m2_ * (l1_ * l2_ * cos(q2) + pow(l2_, 2));
+        M(1, 0) = M(0, 1);
+        M(1, 1) = m2_ * pow(l2_, 2);
 
         // Calculate vector C (C is 2x1 because it already includes q_dot)
+        C << -m2_ * l1_ * l2_ * sin(q2) * (2 * q_dot1 * q_dot2 + pow(q_dot2, 2)),
+        m2_ * l1_ * l2_ * pow(q_dot1, 2) * sin(q2);
 
         // Calculate Fb matrix
+        Fb << b1_, 0.0,
+        0.0, b2_;
 
         // Calculate g_vect
+        g_vec << (m1_ + m2_) * l1_ * g_ * cos(q1) + m2_ * g_ * l2_ * cos(q1 + q2),
+            m2_ * g_ * l2_ * cos(q1 + q2);
 
         // Calculate J
+        J << -l1_ * sin(q1) - l2_ * sin(q1 + q2), -l2_ * sin(q1 + q2),
+            l1_ * cos(q1) + l2_ * cos(q1 + q2), l2_ * cos(q1 + q2);
 
         // Calculate tau_ext
+        tau_ext << J.transpose() * external_wrenches_;
 
-        // Calculate joint accelerations using the dynamic model: q'' = M^(-1)[tau - C(q,q')q' - Fbq' - g(q) + tau_ext]
+        // Calculate joint acceleration using the dynamic model: M * q_ddot = torque - C * q_dot - Fb * joint_velocities_ - g + tau_ext
         Eigen::VectorXd q_ddot(2);
-        q_ddot << 0, 0;
+        q_ddot << M.inverse() * (joint_torques_ - C - Fb * joint_velocities_ - g_vec + tau_ext);
 
-        // Return joint accelerations
         return q_ddot;
     }
 
@@ -156,8 +178,7 @@ private:
     {
         // Placeholder for velocity calculation
         // Integrate velocity over the time step (elapsed_time_)
-        Eigen::VectorXd q_dot(2);
-        q_dot << 0, 0;
+        Eigen::VectorXd q_dot = joint_velocities_ + joint_accelerations_ * elapsed_time_;
 
         return q_dot;
     }
@@ -167,8 +188,7 @@ private:
     {
         // Placeholder for position calculation
         // Integrate position over the time step (elapsed_time_)
-        Eigen::VectorXd q(2);
-        q << 0, 0;
+        Eigen::VectorXd q = joint_positions_ + joint_velocities_ * elapsed_time_;
         
         return q;
     }
