@@ -142,15 +142,16 @@ uma_arm_dynamics:
     b2: 5.0
     g: 9.81
     q0: [0.785398, -0.785398]
-    
+
+Posición 1:
 ![alt text](image-5.png)
-
+Posición 2:
 ![alt text](image-6.png)
-
+Posición 2 vs Velocidad 2:
 ![alt text](image-3.png)
-
+Velocidades:
 ![alt text](image-4.png)
-
+Aceleraciones:
 ![alt text](image-2.png)
 
 ### Experimento 2
@@ -165,13 +166,34 @@ uma_arm_dynamics:
     b2: 2.5
     g: 9.81
     q0: [0.785398, -0.785398]
-
-![alt text](image-7.png)
-
-![alt text](image-8.png)
-
-![alt text](image-9.png)
-
+Posición 1:
 ![alt text](image-10.png)
+Posición 2:
+![alt text](image-7.png)
+Velocidades:
+![alt text](image-8.png)
+Aceleraciones:
+![alt text](image-11.png)
 
 ### Experimento 3
+
+
+uma_arm_dynamics:
+  ros__parameters:
+    frequency: 1000.0
+    m1: 1.5
+    m2: 1.0
+    l1: 1.0
+    l2: 0.6
+    b1: 2.5
+    b2: 2.5
+    g: 9.81
+    q0: [0.785398, -0.785398]
+
+Posición 1:
+
+Posición 2:
+
+Velocidades:
+
+Aceleraciones:
