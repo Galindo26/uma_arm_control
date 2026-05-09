@@ -30,23 +30,55 @@ donde:
 * $\boldsymbol{\tau}_{ext} \in \mathbb{R}^{n \times 1}$ es el vector de los torques de la articulación debidos a fuerzas externas.
 
 
-![alt text](image-3.png)
 
 En nuestro caso, la aceleración debida a los torques aplicados está dada por:
 
 $$ \ddot{\mathbf{q}} = \mathbf{M}^{-1}(\mathbf{q})[ \boldsymbol{\tau} + \boldsymbol{\tau}_{ext} - \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\dot{\mathbf{q}} - \mathbf{F}_b\dot{\mathbf{q}} - \mathbf{g}(\mathbf{q}) ] $$
 
-![alt text](image-4.png)
+
 
 Para calcular las aceleraciones de las articulaciones, primero necesitamos calcular las matrices. Pueden calcularse aplicando las formulaciones de Lagrange o Newton-Euler. En nuestro caso, las matrices se definen por:
+
+
+$$ 
+\mathbf{M}(\mathbf{q}) = 
+\begin{bmatrix} 
+m_1 \cdot l_1^2 + m_2 \cdot (l_1^2 + 2 \cdot l_1 \cdot l_2 \cdot \cos(q_2) + l_2^2) & m_2 \cdot (l_1 \cdot l_2 \cdot \cos(q_2) + l_2^2) \\ 
+m_2 \cdot (l_1 \cdot l_2 \cdot \cos(q_2) + l_2^2) & m_2 \cdot l_2^2 
+\end{bmatrix} 
+$$
+
+
+$$ 
+\mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\dot{\mathbf{q}} = 
+\begin{bmatrix} 
+-m_2 \cdot l_1 \cdot l_2 \cdot \sin(q_2) \cdot (2 \cdot \dot{q}_1 \cdot \dot{q}_2 + \dot{q}_2^2) \\ 
+m_2 \cdot l_1 \cdot l_2 \cdot \dot{q}_1^2 \cdot \sin(q_2) 
+\end{bmatrix} 
+$$
+
+
+$$ 
+\mathbf{F}_b = 
+\begin{bmatrix} 
+b_1 & 0 \\ 
+0 & b_2 
+\end{bmatrix} 
+$$
+
+
+$$ 
+\mathbf{g}(\mathbf{q}) = 
+\begin{bmatrix} 
+(m_1 + m_2) \cdot l_1 \cdot g \cdot \cos(q_1) + m_2 \cdot g \cdot l_2 \cdot \cos(q_1 + q_2) \\ 
+m_2 \cdot g \cdot l_2 \cdot \cos(q_1 + q_2) 
+\end{bmatrix} 
+$$
+
 
 ![alt text](image-5.png)
 
 También necesitaremos calcular el jacobiano para incluir las llaves externas aplicadas en el EE en nuestro modelo:
-
-$$ \mathbf{J}(\mathbf{q}) = \begin{bmatrix} -l_1 \cdot \sin(q_1) - l_2 \cdot \sin(q_1 + q_2) & -l_2 \cdot \sin(q_1 + q_2) \\ l_1 \cdot \cos(q_1) + l_2 \cdot \cos(q_1 + q_2) & l_2 \cdot \cos(q_1 + q_2) \end{bmatrix} $$
-
-
 
 
 
@@ -59,14 +91,13 @@ l_1 \cdot \cos(q_1) + l_2 \cdot \cos(q_1 + q_2) & l_2 \cdot \cos(q_1 + q_2)
 $$
 
 
-![alt text](image-6.png)
 
 
 Entonces, podemos calcular τ_ext como:
 
 $$ \boldsymbol{\tau}_{ext} = \mathbf{J}(\mathbf{q})^T \cdot \mathbf{F}_{ext} $$
 
-![alt text](image-7.png)
+
 
 
 
@@ -77,7 +108,7 @@ Como estamos implementando un sistema discreto:
 
 $$ \ddot{\mathbf{q}}_{k+1} = \mathbf{M}^{-1}(\mathbf{q}_k)[ \boldsymbol{\tau}_k + \boldsymbol{\tau}_{ext_k} - \mathbf{C}(\mathbf{q}_k, \dot{\mathbf{q}}_k)\dot{\mathbf{q}}_k - \mathbf{F}_b\dot{\mathbf{q}}_k - \mathbf{g}(\mathbf{q}_k) ] $$
 
-![alt text](image-8.png)
+
 
 podemos obtener las velocidades y posición conjuntas mediante integración discreta a lo largo del tiempo como:
 
@@ -87,7 +118,7 @@ $$\dot{\mathbf{q}} = \int \ddot{\mathbf{q}} \, dt \implies \dot{\mathbf{q}}_{k+1
 $$ \mathbf{q} = \int \dot{\mathbf{q}} Dt \implies \mathbf{q}_{k+1} = \mathbf{q}_k + \dot{\mathbf{q}}_{k+1} \cdot \Delta t $$
 
 
-![alt text](image-9.png)
+
 
 ## Lanzar el nodo del simulador dinámico
 
