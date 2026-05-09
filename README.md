@@ -122,9 +122,9 @@ $$ \mathbf{q} = \int \dot{\mathbf{q}} Dt \implies \mathbf{q}_{k+1} = \mathbf{q}_
 
 
 
-![alt text](image.png)
+![alt text](app_esquema.png)
 
-![alt text](image-1.png)
+![alt text](esquema.png)
 
 
 
@@ -144,15 +144,15 @@ uma_arm_dynamics:
     q0: [0.785398, -0.785398]
 
 Posición 1:
-![alt text](image-5.png)
+![alt text](posicion1_1.png)
 Posición 2:
-![alt text](image-6.png)
+![alt text](posicion1_2.png)
 Posición 2 vs Velocidad 2:
-![alt text](image-3.png)
+![alt text](pos1_2VSvel1_2.png)
 Velocidades:
-![alt text](image-4.png)
+![alt text](velocidades1.png)
 Aceleraciones:
-![alt text](image-2.png)
+![alt text](aceleraciones1.png)
 
 ### Experimento 2
 uma_arm_dynamics:
@@ -167,13 +167,13 @@ uma_arm_dynamics:
     g: 9.81
     q0: [0.785398, -0.785398]
 Posición 1:
-![alt text](image-10.png)
+![alt text](posicion2_1.png)
 Posición 2:
-![alt text](image-7.png)
+![alt text](posicion2_2.png)
 Velocidades:
-![alt text](image-8.png)
+![alt text](velocidades2.png)
 Aceleraciones:
-![alt text](image-11.png)
+![alt text](aceleraciones2.png)
 
 ### Experimento 3
 
