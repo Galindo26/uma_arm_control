@@ -131,6 +131,7 @@ $$ \mathbf{q} = \int \dot{\mathbf{q}} Dt \implies \mathbf{q}_{k+1} = \mathbf{q}_
 ## Representación gráfica
 
 ### Experimento 1
+
 uma_arm_dynamics:
   ros__parameters:
     frequency: 1000.0
@@ -157,6 +158,7 @@ Aceleraciones:
 ![Simulación Experimento 1](exp1.gif)
 
 ### Experimento 2
+
 uma_arm_dynamics:
   ros__parameters:
     frequency: 1000.0
@@ -183,7 +185,6 @@ Aceleraciones:
 
 ### Experimento 3
 
-
 uma_arm_dynamics:
   ros__parameters:
     frequency: 1000.0
@@ -196,9 +197,14 @@ uma_arm_dynamics:
     g: 9.81
     q0: [0.785398, -0.785398]
 
+Posiciones:
+![alt text](posiciones3.png)
+Velocidades
+![alt text](velocidades3.png)
+Aceleraciones:
+![alt text](aceleraciones3.png)
 
 ### Experimento 4
-
 
 uma_arm_dynamics:
   ros__parameters:
@@ -211,3 +217,11 @@ uma_arm_dynamics:
     b2: 2.0
     g: 9.81
     q0: [0.785398, -0.785398]
+
+Posiciones:
+![alt text](posiciones4.png)
+Velocidades
+![alt text](velocidades4.png)
+Aceleraciones:
+![alt text](aceleraciones4.png)
+
