@@ -76,8 +76,6 @@ m_2 \cdot g \cdot l_2 \cdot \cos(q_1 + q_2)
 $$
 
 
-![alt text](image-5.png)
-
 También necesitaremos calcular el jacobiano para incluir las llaves externas aplicadas en el EE en nuestro modelo:
 
 
