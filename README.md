@@ -154,6 +154,8 @@ Velocidades:
 Aceleraciones:
 ![alt text](aceleraciones1.png)
 
+![Simulación Experimento 1](exp1.gif)
+
 ### Experimento 2
 uma_arm_dynamics:
   ros__parameters:
@@ -174,6 +176,8 @@ Velocidades:
 ![alt text](velocidades2.png)
 Aceleraciones:
 ![alt text](aceleraciones2.png)
+
+![Simulación Experimento 2](exp2.gif)
 
 ### Experimento 3
 
