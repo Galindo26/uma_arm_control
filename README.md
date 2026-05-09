@@ -11,6 +11,9 @@ ros2 launch uma_arm_control uma_arm_dynamics_launch.py
 
 La dinámica de un manipulador robótico de cadena cinemática abierta está dada por:
 
+
+$$ \mathbf{M}(\mathbf{q})\ddot{\mathbf{q}} + \mathbf{C}(\mathbf{q}, \dot{\mathbf{q}})\dot{\mathbf{q}} + \mathbf{F}_b\dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau} + \boldsymbol{\tau}_{ext} $$
+
 ![alt text](image-2.png)
 
 donde:
