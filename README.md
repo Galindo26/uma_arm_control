@@ -179,30 +179,9 @@ Aceleraciones:
 
 ![Simulación Experimento 2](exp2.gif)
 
+
+
 ### Experimento 3
-
-
-uma_arm_dynamics:
-  ros__parameters:
-    frequency: 1000.0
-    m1: 1.0
-    m2: 2.0
-    l1: 1.0
-    l2: 0.6
-    b1: 5.0
-    b2: 3.0
-    g: 9.81
-    q0: [0.785398, -0.785398]
-
-Posición 1:
-
-Posición 2:
-
-Velocidades:
-
-Aceleraciones:
-
-### Experimento 4
 
 
 uma_arm_dynamics:
@@ -218,7 +197,7 @@ uma_arm_dynamics:
     q0: [0.785398, -0.785398]
 
 
-### Experimento 5
+### Experimento 4
 
 
 uma_arm_dynamics:
