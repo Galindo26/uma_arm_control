@@ -8,6 +8,7 @@ ros2 launch uma_arm_description uma_arm_visualization.launch.py
 ros2 launch uma_arm_control uma_arm_dynamics_launch.py
 ros2 launch uma_arm_control gravity_compensation_launch.py
 ros2 launch uma_arm_control dynamics_cancellation_launch.py
+ros2 launch uma_arm_control pd_controller_launch.py
 ```
 
 
