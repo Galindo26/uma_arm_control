@@ -7,6 +7,7 @@ rosbag2_bagfile_information:
     nanoseconds_since_epoch: 1778355075337893225
   message_count: 65631
   topics_with_message_count:
+  
     - topic_metadata:
         name: /joint_states
         type: sensor_msgs/msg/JointState
