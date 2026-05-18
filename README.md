@@ -39,9 +39,11 @@ Method `gravity_compensation()` to calculate the desired torques:
         }
 ```
 
-Resultado:
+Resultado Manipulador:
 ![alt text](gravity_compensation.png)
 
+Representacion con Rqt Graph:
+![alt text](rqt_graph.png)
 
 ### Linearization by inverse dynamics control
 
