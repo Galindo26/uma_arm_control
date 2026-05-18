@@ -47,6 +47,11 @@ Resultado Manipulador:
 Representacion con Rqt Graph:
 ![alt text](rqt_graph.png)
 
+3.1.3:
+grapho:
+![alt text](graph.png)
+![alt text](fuerzas.gif)
+
 ### Linearization by inverse dynamics control
 
 When the desired manipulator motion requires large joint speeds and accelerations, the nonlinear coupling terms strongly influence the system performance. In these cases, a decentralized control strategy is not suitable. Instead, we use a centralized control approach known as **Inverse Dynamics Control** (or Feedback Linearization).
