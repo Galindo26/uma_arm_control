@@ -38,7 +38,8 @@ Method gravity_compensation() to calculate the desired torques:
             return torque;
         }
 
-
+Resultado:
+![alt text](gravity_compensation.png)
 
 
 
@@ -49,3 +50,4 @@ Method gravity_compensation() to calculate the desired torques:
 
 
 ### Experiments
+
