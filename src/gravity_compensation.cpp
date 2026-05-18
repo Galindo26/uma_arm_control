@@ -98,14 +98,21 @@
         // Method to calculate the desired joint torques
         Eigen::VectorXd gravity_compensation()
         {
-            // Placeholder for calculate the commanded torques
-            // Calculate the control torque to compensate only for gravity effects: tau = g(q)
-
-            // Calculate g_vect
-
-            // // Calculate desired torque
+            // Vector para los pares articulares
             Eigen::VectorXd torque(2);
-            torque << 0, 0;
+
+            // Posiciones articulares actuales
+            double q1 = joint_positions_(0);
+            double q2 = joint_positions_(1);
+
+            // Cálculo del vector de gravedad g(q)
+            // Asume configuración planar estándar con ángulos desde la horizontal
+            // y masas concentradas al final de l1 y l2.
+            double g1 = (m1_ + m2_) * g_ * l1_ * std::cos(q1) + m2_ * g_ * l2_ * std::cos(q1 + q2);
+            double g2 = m2_ * g_ * l2_ * std::cos(q1 + q2);
+
+            // Asignación de los pares de control deseados
+            torque << g1, g2;
 
             return torque;
         }
