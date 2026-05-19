@@ -190,9 +190,46 @@ Estos términos derivados son los que se utilizan directamente en la implementac
         }
 ```
 
+El resultado del experimento es:
+
+![alt text](apartado32exp.png)
+
+
+
+
 ### Experimentos
 
-*(Sección reservada para futuros resultados experimentales)*
+#### What happens if the dynamics compensation model is not exactly the same as the manipulator dynamics?
+
+APARTADO A: Alteraremos los valores de gravity compensation.
+
+Con  (m1:3.0, m2:2.0, l1:1.0 y l2:0.6):
+
+
+
+
+Con  (m1:3.0, m2:2.0, l1:1.0 y l2:0.6):
+
+
+
+
+APARTADO B: Alteraremos los valores de dynamics cancellation.
+
+Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:5.0 y b2:5.0):
+
+
+Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:5.0 y b2:5.0):
+
+
+#### What is the behavior of the robot under the inverse dynamics controller when you apply virtual forces to the EE?
+
+
+
+
+
+
+
+
 
 ### 4. Controlador PD en el espacio articular con compensación de dinámicas no lineales
 
