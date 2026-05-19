@@ -400,4 +400,4 @@ Simulación:
 
 Gráfica de la simulación:
 
-![alt text](exppd.png)
+![alt text](exppdb.png)
