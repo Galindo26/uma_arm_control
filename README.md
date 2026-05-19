@@ -1,7 +1,7 @@
 # uma_arm_control
-This is the UMA arm control repo
+Este es el repositorio de control del brazo UMA.
 
-## Launch 
+## Ejecución 
 
 ```bash
 ros2 launch uma_arm_description uma_arm_visualization.launch.py
@@ -11,15 +11,13 @@ ros2 launch uma_arm_control dynamics_cancellation_launch.py
 ros2 launch uma_arm_control pd_controller_launch.py
 ```
 
+## Control por Dinámica Inversa
 
-## Inverse Dynamics Control
-
-
-### Gravity compensation
-Method `gravity_compensation()` to calculate the desired torques:
+### Compensación de gravedad
+Método `gravity_compensation()` para calcular los pares articulares deseados:
 
 ```cpp
-        // Method to calculate the desired joint torques
+        // Método para calcular los pares articulares deseados
         Eigen::VectorXd gravity_compensation()
         {
             // Vector para los pares articulares
@@ -42,128 +40,149 @@ Method `gravity_compensation()` to calculate the desired torques:
         }
 ```
 
-Resultado Manipulador:
-![alt text](gravity_compensation.png)
+<div align="center">
+  <img src="gravity_compensation.png" width="60%" alt="Resultado Manipulador">
+  <br>
+  <em>Figura 1: Resultado del Manipulador con compensación de gravedad</em>
+</div>
 
-Representacion con Rqt Graph:
-![alt text](rqt_graph.png)
+<br>
 
-3.1.3:
-grapho:
-![alt text](graph.png)
-![alt text](fuerzas.gif)
+<div align="center">
+  <img src="rqt_graph.png" width="70%" alt="Representación con Rqt Graph">
+  <br>
+  <em>Figura 2: Representación del sistema usando rqt_graph</em>
+</div>
 
-### Linearization by inverse dynamics control
+<br>
 
-When the desired manipulator motion requires large joint speeds and accelerations, the nonlinear coupling terms strongly influence the system performance. In these cases, a decentralized control strategy is not suitable. Instead, we use a centralized control approach known as **Inverse Dynamics Control** (or Feedback Linearization).
+**Sección 3.1.3:**
 
-The dynamics of an $n$-joint manipulator can be described by the following equation:
+<div align="center">
+  <img src="graph.png" width="70%" alt="Grafo">
+  <br>
+  <em>Figura 3: Grafo de nodos y tópicos</em>
+</div>
+
+<br>
+
+<div align="center">
+  <img src="fuerzas.gif" width="60%" alt="Animación de fuerzas">
+  <br>
+  <em>Figura 4: Animación de la simulación y fuerzas actuantes</em>
+</div>
+
+### Linealización mediante control por dinámica inversa
+
+Cuando el movimiento deseado del manipulador requiere grandes velocidades y aceleraciones articulares, los términos de acoplamiento no lineal influyen fuertemente en el rendimiento del sistema. En estos casos, una estrategia de control descentralizada no es adecuada. En su lugar, utilizamos un enfoque de control centralizado conocido como **Control por Dinámica Inversa** (o Linealización por Realimentación Exacta).
+
+La dinámica de un manipulador de $n$ articulaciones puede describirse mediante la siguiente ecuación:
 
 $$M(q)\ddot{q} + n(q,\dot{q}) = \tau$$
 
-where $n(q,\dot{q})$ groups all the nonlinear terms (Coriolis, centrifugal forces, viscous friction, and gravity):
+donde $n(q,\dot{q})$ agrupa todos los términos no lineales (Coriolis, fuerzas centrífugas, fricción viscosa y gravedad):
 
 $$n(q,\dot{q}) = C(q,\dot{q})\dot{q} + F_b\dot{q} + g(q)$$
 
-The goal of the inverse dynamics control is to perform an exact linearization of the system dynamics by means of a nonlinear state feedback. We define our control input $\tau$ as a function of the manipulator state:
+El objetivo del control por dinámica inversa es realizar una linealización exacta de la dinámica del sistema mediante una realimentación de estado no lineal. Definimos nuestra entrada de control $\tau$ como una función del estado del manipulador:
 
 $$\tau = M(q)y + n(q,\dot{q})$$
 
-By substituting this control law back into the dynamic model, the nonlinearities are perfectly cancelled, and the system is reduced to a simple, decoupled double integrator:
+Sustituyendo esta ley de control de vuelta en el modelo dinámico, las no linealidades se cancelan perfectamente y el sistema se reduce a un simple doble integrador desacoplado:
 
 $$\ddot{q} = y$$
 
-Once the system is linearized, $y$ represents a new input vector that dictates the desired dynamic behavior. We can now easily track a desired trajectory $q_d(t)$ by applying a stabilizing linear control law, such as a Proportional-Derivative (PD) controller:
+Una vez que el sistema está linealizado, $y$ representa un nuevo vector de entrada que dicta el comportamiento dinámico deseado. Ahora podemos seguir fácilmente una trayectoria deseada $q_d(t)$ aplicando una ley de control lineal estabilizadora, como un controlador Proporcional-Derivativo (PD):
 
 $$y = \ddot{q}_d + K_D\dot{\tilde{q}} + K_P\tilde{q}$$
 
-where $\tilde{q} = q_d - q$ is the tracking error, and $K_P$ and $K_D$ are positive definite diagonal matrices. This guarantees that the position error converges asymptotically to zero.
+donde $\tilde{q} = q_d - q$ es el error de seguimiento, y $K_P$ y $K_D$ son matrices diagonales definidas positivas. Esto garantiza que el error de posición converja asintóticamente a cero.
 
-#### Euler-Lagrange Formulation for 2-DOF Planar Robot
+#### Formulación de Euler-Lagrange para un Robot Planar de 2 GDL
 
-To implement the exact dynamic cancellation, we derive the mathematical model using the **Euler-Lagrange** formulation. The Lagrangian $L$ is defined as the difference between the Kinetic Energy ($K$) and the Potential Energy ($P$):
+Para implementar la cancelación dinámica exacta, derivamos el modelo matemático utilizando la formulación de **Euler-Lagrange**. El Lagrangiano $L$ se define como la diferencia entre la Energía Cinética ($K$) y la Energía Potencial ($P$):
 
 $$L = K - P$$
 
-The joint torques $\tau_i$ are obtained through the Euler-Lagrange equation:
+Los pares articulares $\tau_i$ se obtienen a través de la ecuación de Euler-Lagrange:
 
 $$\tau_i = \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{q}_i} \right) - \frac{\partial L}{\partial q_i}$$
 
-Assuming a standard 2-DOF planar manipulator with point masses $m_1$ and $m_2$ at the end of links of lengths $l_1$ and $l_2$:
+Asumiendo un manipulador planar estándar de 2 GDL con masas puntuales $m_1$ y $m_2$ al final de eslabones de longitudes $l_1$ y $l_2$:
 
-**1. Potential Energy and Gravity Vector $g(q)$**
-The potential energy depends only on the height (y-axis) of the masses:
+**1. Energía Potencial y Vector de Gravedad $g(q)$**
+La energía potencial depende únicamente de la altura (eje y) de las masas:
 
 $$P = m_1 g l_1 \sin(q_1) + m_2 g (l_1 \sin(q_1) + l_2 \sin(q_1 + q_2))$$
 
-The gravity vector $g(q)$ is obtained by taking the partial derivative of $P$ with respect to each joint variable $q_i$:
+El vector de gravedad $g(q)$ se obtiene tomando la derivada parcial de $P$ con respecto a cada variable articular $q_i$:
 
 $$g_1(q) = \frac{\partial P}{\partial q_1} = (m_1 + m_2) g l_1 \cos(q_1) + m_2 g l_2 \cos(q_1 + q_2)$$
 $$g_2(q) = \frac{\partial P}{\partial q_2} = m_2 g l_2 \cos(q_1 + q_2)$$
 
-**2. Kinetic Energy, Inertia Matrix $M(q)$, and Coriolis $C(q,\dot{q})$**
-The total kinetic energy is the sum of the kinetic energies of the two point masses:
+**2. Energía Cinética, Matriz de Inercia $M(q)$ y Coriolis $C(q,\dot{q})$**
+La energía cinética total es la suma de las energías cinéticas de las dos masas puntuales:
 
 $$K = \frac{1}{2} m_1 v_1^2 + \frac{1}{2} m_2 v_2^2$$
 
-By expressing the linear velocities $v_1$ and $v_2$ in terms of joint velocities $\dot{q}_1$ and $\dot{q}_2$, we get:
+Expresando las velocidades lineales $v_1$ y $v_2$ en términos de las velocidades articulares $\dot{q}_1$ y $\dot{q}_2$, obtenemos:
 
 $$K = \frac{1}{2} \left[ (m_1+m_2)l_1^2 + m_2 l_2^2 + 2m_2 l_1 l_2 \cos(q_2) \right] \dot{q}_1^2 + \frac{1}{2} m_2 l_2^2 \dot{q}_2^2 + \left[ m_2 l_2^2 + m_2 l_1 l_2 \cos(q_2) \right] \dot{q}_1 \dot{q}_2$$
 
-Applying the Euler-Lagrange operator to $K$ yields the Inertia Matrix $M(q)$:
+Aplicando el operador de Euler-Lagrange a $K$ se obtiene la Matriz de Inercia $M(q)$:
 
 $$M_{11} = (m_1+m_2)l_1^2 + m_2 l_2^2 + 2m_2 l_1 l_2 \cos(q_2)$$
 $$M_{12} = M_{21} = m_2 l_2^2 + m_2 l_1 l_2 \cos(q_2)$$
 $$M_{22} = m_2 l_2^2$$
 
-And the Coriolis and centrifugal terms $C(q,\dot{q})\dot{q}$, defining $h = m_2 l_1 l_2 \sin(q_2)$:
+Y los términos de Coriolis y centrífugos $C(q,\dot{q})\dot{q}$, definiendo $h = m_2 l_1 l_2 \sin(q_2)$:
 
 $$C(q,\dot{q})\dot{q} = \begin{bmatrix} -h \dot{q}_2^2 - 2h \dot{q}_1 \dot{q}_2 \\ h \dot{q}_1^2 \end{bmatrix}$$
 
-These derived terms are the ones directly used in the node implementation.
+Estos términos derivados son los que se utilizan directamente en la implementación del nodo.
 
-#### Implementation of `cancel_dynamics()`
+#### Implementación de `cancel_dynamics()`
 
 ```cpp
-        // Method to calculate joint acceleration
+        // Método para calcular la aceleración articular
         Eigen::VectorXd cancel_dynamics()
         {
-            // Initialize M, C (C*q_dot), Fb, g_vec
+            // Inicializar M, C (C*q_dot), Fb, g_vec
             Eigen::MatrixXd M(2, 2);
             Eigen::VectorXd C_vec(2); 
             Eigen::VectorXd Fb_vec(2);
             Eigen::VectorXd g_vec(2);
 
-            // Initialize q1, q2, q_dot1, and q_dot2
+            // Inicializar q1, q2, q_dot1 y q_dot2
             double q1 = joint_positions_(0);
             double q2 = joint_positions_(1);
             double q_dot1 = joint_velocities_(0);
             double q_dot2 = joint_velocities_(1);
             
-            // Extract desired joint accelerations (y in the control scheme)
+            // Extraer las aceleraciones articulares deseadas (y en el esquema de control)
             Eigen::VectorXd q_ddot_d = desired_joint_accelerations_;
 
-            // Calculate matrix M (Inertia Matrix)
+            // Calcular matriz M (Matriz de Inercia)
             M(0, 0) = (m1_ + m2_) * l1_ * l1_ + m2_ * l2_ * l2_ + 2.0 * m2_ * l1_ * l2_ * std::cos(q2);
             M(0, 1) = m2_ * l2_ * l2_ + m2_ * l1_ * l2_ * std::cos(q2);
             M(1, 0) = M(0, 1);
             M(1, 1) = m2_ * l2_ * l2_;
 
-            // Calculate vector C (C is 2x1 because it already includes q_dot)
-            // It represents Coriolis and centrifugal forces
+            // Calcular vector C (C es de 2x1 porque ya incluye q_dot)
+            // Representa las fuerzas de Coriolis y centrífugas
             double h = m2_ * l1_ * l2_ * std::sin(q2);
             C_vec(0) = -h * q_dot2 * q_dot2 - 2.0 * h * q_dot1 * q_dot2;
             C_vec(1) = h * q_dot1 * q_dot1;
 
-            // Calculate Fb vector (Viscous friction: Fb * q_dot)
+            // Calcular vector Fb (Fricción viscosa: Fb * q_dot)
             Fb_vec(0) = b1_ * q_dot1;
             Fb_vec(1) = b2_ * q_dot2;
 
-            // Calculate g_vect (Gravity vector)
+            // Calcular g_vect (Vector de gravedad)
             g_vec(0) = (m1_ + m2_) * g_ * l1_ * std::cos(q1) + m2_ * g_ * l2_ * std::cos(q1 + q2);
             g_vec(1) = m2_ * g_ * l2_ * std::cos(q1 + q2);
 
-            // Calculate control torque using the dynamic model: torque = M * q_ddot_d + C * q_dot + Fb * q_dot + g
+            // Calcular el par de control usando el modelo dinámico: torque = M * q_ddot_d + C * q_dot + Fb * q_dot + g
             Eigen::VectorXd torque(2);
             torque = M * q_ddot_d + C_vec + Fb_vec + g_vec;
 
@@ -171,53 +190,43 @@ These derived terms are the ones directly used in the node implementation.
         }
 ```
 
-### Experiments
+### Experimentos
 
+*(Sección reservada para futuros resultados experimentales)*
 
+### 4. Controlador PD en el espacio articular con compensación de dinámicas no lineales
 
-
-
-
-
-
-
-
-
-
-
-### 4. Joint-space PD controller with non-linear dynamics compensation
-
-When implementing a centralized control strategy like **Inverse Dynamics Control** (or Feedback Linearization), the non-linear dynamics of the manipulator ($M(q)$, $C(q, \dot{q})$, $F_b$, and $g(q)$) are perfectly cancelled. This reduces the complex system to a set of decoupled double integrators:
+Al implementar una estrategia de control centralizada como el **Control por Dinámica Inversa** (o Linealización por Realimentación), las dinámicas no lineales del manipulador ($M(q)$, $C(q, \dot{q})$, $F_b$, y $g(q)$) se cancelan perfectamente. Esto reduce el complejo sistema a un conjunto de dobles integradores desacoplados:
 
 $$\ddot{q} = y$$
 
-To achieve asymptotic tracking of a desired trajectory $q_d(t)$, the auxiliary control input $y$ is chosen as a Proportional-Derivative (PD) stabilizing control law:
+Para lograr un seguimiento asintótico de una trayectoria deseada $q_d(t)$, la entrada de control auxiliar $y$ se elige como una ley de control estabilizadora Proporcional-Derivativa (PD):
 
 $$y = \ddot{q}_d + K_D\dot{\tilde{q}} + K_P\tilde{q}$$
 
-where the tracking error is $\tilde{q} = q_d - q$ and its derivative is $\dot{\tilde{q}} = \dot{q}_d - \dot{q}$.
+donde el error de seguimiento es $\tilde{q} = q_d - q$ y su derivada es $\dot{\tilde{q}} = \dot{q}_d - \dot{q}$.
 
-#### Regulatory Control (Constant Setpoint)
-For a task where the desired joint position $q_d$ is constant, the desired velocity and acceleration are zero ($\dot{q}_d = 0$, $\ddot{q}_d = 0$). Substituting these conditions into the stabilizing control law yields the simplified expression:
+#### Control Regulatorio (Setpoint Constante)
+Para una tarea donde la posición articular deseada $q_d$ es constante, la velocidad y aceleración deseadas son cero ($\dot{q}_d = 0$, $\ddot{q}_d = 0$). Sustituyendo estas condiciones en la ley de control estabilizadora se obtiene la expresión simplificada:
 
 $$y = K_P(q_d - q) - K_D\dot{q}$$
 
-#### Selection of $K_P$ and $K_D$
-To guarantee asymptotic stability, the gain matrices $K_P$ and $K_D$ must be positive definite and diagonal. The dynamic behavior of the position error is defined by a second-order differential equation for each joint, where the gains correspond to:
+#### Selección de $K_P$ y $K_D$
+Para garantizar la estabilidad asintótica, las matrices de ganancia $K_P$ y $K_D$ deben ser definidas positivas y diagonales. El comportamiento dinámico del error de posición está definido por una ecuación diferencial de segundo orden para cada articulación, donde las ganancias corresponden a:
 
 $$K_P = \text{diag}\{\omega_{n1}^2, \dots, \omega_{nn}^2\}$$
 $$K_D = \text{diag}\{2\zeta_1\omega_{n1}, \dots, 2\zeta_n\omega_{nn}\}$$
 
-To achieve a fast response without overshoot (critical damping), the damping ratio is set to $\zeta = 1$. Assuming a natural frequency of $\omega_n = 10 \text{ rad/s}$ for all joints, the resulting gains are:
+Para conseguir una respuesta rápida sin sobreoscilación (amortiguamiento crítico), la relación de amortiguamiento se establece en $\zeta = 1$. Asumiendo una frecuencia natural de $\omega_n = 10 \text{ rad/s}$ para todas las articulaciones, las ganancias resultantes son:
 * $K_P = 100$
 * $K_D = 20$
 
-#### Implementation of the Stabilizing Linear Control Node
+#### Implementación del Nodo de Control Lineal Estabilizador
 
 ```cpp
 /*
-    PD Controller Node for Inverse Dynamics Linearization
-    Outputs the auxiliary control input 'y' (published as desired_joint_accelerations)
+    Nodo Controlador PD para la Linealización por Dinámica Inversa
+    Devuelve la entrada de control auxiliar 'y' (publicada como desired_joint_accelerations)
 */
 
 #include <rclcpp/rclcpp.hpp>
@@ -231,26 +240,26 @@ class PDControllerNode : public rclcpp::Node
 public:
     PDControllerNode() : Node("pd_controller_node")
     {
-        // Declare parameters with default values based on critical damping (wn = 10, zeta = 1)
-        this->declare_parameter<std::vector<double>>("qd", {1.0, 1.0}); // Default desired position
+        // Declarar parámetros con valores por defecto basados en el amortiguamiento crítico (wn = 10, zeta = 1)
+        this->declare_parameter<std::vector<double>>("qd", {1.0, 1.0}); // Posición deseada por defecto
         this->declare_parameter<double>("kp", 100.0);
         this->declare_parameter<double>("kd", 20.0);
 
-        // Get parameters
+        // Obtener parámetros
         std::vector<double> qd_param = this->get_parameter("qd").as_double_array();
         qd_ = Eigen::VectorXd::Map(qd_param.data(), qd_param.size());
         
         kp_ = this->get_parameter("kp").as_double();
         kd_ = this->get_parameter("kd").as_double();
 
-        // Create publisher for the auxiliary control input 'y' (desired accelerations)
+        // Crear publicador para la entrada de control auxiliar 'y' (aceleraciones deseadas)
         publisher_ = this->create_publisher<std_msgs::msg::Float64MultiArray>("desired_joint_accelerations", 1);
         
-        // Create subscription to current joint states
+        // Crear suscriptor para los estados articulares actuales
         subscriber_ = this->create_subscription<sensor_msgs::msg::JointState>(
             "joint_states", 1, std::bind(&PDControllerNode::joint_states_callback, this, std::placeholders::_1));
             
-        RCLCPP_INFO(this->get_logger(), "PD Controller Node initialized with Kp=%.2f, Kd=%.2f", kp_, kd_);
+        RCLCPP_INFO(this->get_logger(), "Nodo Controlador PD inicializado con Kp=%.2f, Kd=%.2f", kp_, kd_);
     }
 
 private:
@@ -259,7 +268,7 @@ private:
         Eigen::VectorXd q(2);
         Eigen::VectorXd q_dot(2);
 
-        // Extract joint positions and velocities
+        // Extraer posiciones y velocidades articulares
         auto joint1_index = std::find(msg->name.begin(), msg->name.end(), "joint_1") - msg->name.begin();
         auto joint2_index = std::find(msg->name.begin(), msg->name.end(), "joint_2") - msg->name.begin();
 
@@ -271,18 +280,18 @@ private:
             q_dot(0) = msg->velocity[joint1_index];
             q_dot(1) = msg->velocity[joint2_index];
 
-            // Calculate the stabilizing linear control law: y = Kp*(qd - q) - Kd*q_dot
-            // (Assuming q_ddot_d = 0 and q_dot_d = 0)
+            // Calcular la ley de control lineal estabilizadora: y = Kp*(qd - q) - Kd*q_dot
+            // (Asumiendo q_ddot_d = 0 y q_dot_d = 0)
             Eigen::VectorXd y = kp_ * (qd_ - q) - kd_ * q_dot;
 
-            // Publish 'y' to the topic expected by the dynamics cancellation node
+            // Publicar 'y' al tópico esperado por el nodo de cancelación dinámica
             auto y_msg = std_msgs::msg::Float64MultiArray();
             y_msg.data.assign(y.data(), y.data() + y.size());
             publisher_->publish(y_msg);
         }
     }
 
-    // Member variables
+    // Variables miembro
     Eigen::VectorXd qd_;
     double kp_;
     double kd_;
@@ -299,3 +308,5 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+````</PDControllerNode></Eigen/Dense>
