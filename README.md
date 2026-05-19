@@ -227,6 +227,9 @@ Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:4.0 y b2:4.0):
 
 ![alt text](exp33b3.png)
 
+Con  (m1:2.0, m2:4.0, l1:1.0, l2:0.6, b1:6.0 y b2:3.5):
+
+![alt text](exp33b4.png)
 
 #### What is the behavior of the robot under the inverse dynamics controller when you apply virtual forces to the EE?
 
