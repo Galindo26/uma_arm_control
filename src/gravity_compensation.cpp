@@ -25,8 +25,8 @@
     public:
         DynamicsCancellationNode()
             : Node("gravity_compensation_node"),
-              joint_positions_(Eigen::VectorXd::Zero(2)),
-              joint_torques_(Eigen::VectorXd::Zero(2))
+                joint_positions_(Eigen::VectorXd::Zero(2)),
+                joint_torques_(Eigen::VectorXd::Zero(2))
         {
             // Frequency initialization
             this->declare_parameter<double>("frequency", 1000.0);
