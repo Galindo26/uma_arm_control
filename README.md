@@ -206,13 +206,15 @@ El resultado del experimento es:
 
 **APARTADO A:** Alteraremos los valores de compensación de gravedad.
 
-Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
-
-*(Gráfica de resultados omitida/pendiente)*
 
 Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
 
 *(Gráfica de resultados omitida/pendiente)*
+
+Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
+
+*(Gráfica de resultados omitida/pendiente)*
+
 
 **APARTADO B:** Alteraremos los valores de cancelación dinámica.
 
@@ -258,7 +260,7 @@ Con (m1: 2.0, m2: 4.0, l1: 1.0, l2: 0.6, b1: 6.0 y b2: 3.5):
 
 #### ¿Cuál es el comportamiento del robot bajo el controlador de dinámica inversa cuando se aplican fuerzas virtuales al Efector Final (EE)?
 
-Experimento:
+Simulación:
 
 <div align="center">
   <img src="cancelacion_dinamica.gif" width="60%" alt="Experimento de fuerzas virtuales">
@@ -268,7 +270,7 @@ Experimento:
 
 <br>
 
-Gráfica del experimento:
+Gráfica de la simulación:
 
 <div align="center">
   <img src="exp332.png" width="70%" alt="Gráfica del experimento con fuerzas virtuales">
@@ -393,5 +395,9 @@ int main(int argc, char *argv[])
 }
 ```
 
-**Resultado con PD:** *(Inserta la imagen o descripción de los resultados aquí si la tienes)*
-````</PDControllerNode></Eigen/Dense>
+Simulación:
+
+
+Gráfica de la simulación:
+
+![alt text](exppd.png)
