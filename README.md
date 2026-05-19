@@ -233,10 +233,11 @@ Con  (m1:2.0, m2:4.0, l1:1.0, l2:0.6, b1:6.0 y b2:3.5):
 
 #### What is the behavior of the robot under the inverse dynamics controller when you apply virtual forces to the EE?
 
+Experimento:
 
 
-
-
+Gráfica del experimento:
+![alt text](exp332.png)
 
 
 
@@ -355,4 +356,4 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
-
+Resultado con PD:
