@@ -192,55 +192,91 @@ Estos términos derivados son los que se utilizan directamente en la implementac
 
 El resultado del experimento es:
 
-![alt text](apartado32exp.png)
+<div align="center">
+  <img src="apartado32exp.png" width="70%" alt="Resultado del experimento 3.2">
+  <br>
+  <em>Figura 5: Resultado del experimento de cancelación de dinámicas</em>
+</div>
 
-
-
+---
 
 ### Experimentos
 
-#### What happens if the dynamics compensation model is not exactly the same as the manipulator dynamics?
+#### ¿Qué sucede si el modelo de compensación dinámica no es exactamente igual a la dinámica del manipulador?
 
-APARTADO A: Alteraremos los valores de gravity compensation.
+**APARTADO A:** Alteraremos los valores de compensación de gravedad.
 
-Con  (m1:3.0, m2:2.0, l1:1.0 y l2:0.6):
+Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
 
+*(Gráfica de resultados omitida/pendiente)*
 
+Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
 
+*(Gráfica de resultados omitida/pendiente)*
 
-Con  (m1:3.0, m2:2.0, l1:1.0 y l2:0.6):
+**APARTADO B:** Alteraremos los valores de cancelación dinámica.
 
+Con (m1: 3.0, m2: 2.0, l1: 1.0, l2: 0.6, b1: 5.0 y b2: 5.0):
 
+<div align="center">
+  <img src="apartado32exp.png" width="70%" alt="Experimento B1">
+  <br>
+  <em>Figura 6: Resultados alterando parámetros (Prueba 1)</em>
+</div>
 
+<br>
 
-APARTADO B: Alteraremos los valores de dynamics cancellation.
+Con (m1: 3.0, m2: 2.0, l1: 1.5, l2: 0.2, b1: 5.0 y b2: 5.0):
 
-Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:5.0 y b2:5.0):
+<div align="center">
+  <img src="exp33b2.png" width="70%" alt="Experimento B2">
+  <br>
+  <em>Figura 7: Resultados alterando parámetros (Prueba 2)</em>
+</div>
 
-![alt text](apartado32exp.png)
+<br>
 
-Con  (m1:3.0, m2:2.0, l1:1.5, l2:0.2, b1:5.0 y b2:5.0):
+Con (m1: 3.0, m2: 2.0, l1: 1.0, l2: 0.6, b1: 4.0 y b2: 4.0):
 
-![alt text](exp33b2.png)
+<div align="center">
+  <img src="exp33b3.png" width="70%" alt="Experimento B3">
+  <br>
+  <em>Figura 8: Resultados alterando parámetros (Prueba 3)</em>
+</div>
 
-Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:4.0 y b2:4.0):
+<br>
 
-![alt text](exp33b3.png)
+Con (m1: 2.0, m2: 4.0, l1: 1.0, l2: 0.6, b1: 6.0 y b2: 3.5):
 
-Con  (m1:2.0, m2:4.0, l1:1.0, l2:0.6, b1:6.0 y b2:3.5):
+<div align="center">
+  <img src="exp33b4.png" width="70%" alt="Experimento B4">
+  <br>
+  <em>Figura 9: Resultados alterando parámetros (Prueba 4)</em>
+</div>
 
-![alt text](exp33b4.png)
+<br>
 
-#### What is the behavior of the robot under the inverse dynamics controller when you apply virtual forces to the EE?
+#### ¿Cuál es el comportamiento del robot bajo el controlador de dinámica inversa cuando se aplican fuerzas virtuales al Efector Final (EE)?
 
 Experimento:
 
+<div align="center">
+  <img src="cancelacion_dinamica.gif" width="60%" alt="Experimento de fuerzas virtuales">
+  <br>
+  <em>Figura 10: Comportamiento del robot bajo fuerzas virtuales aplicadas al EE</em>
+</div>
+
+<br>
 
 Gráfica del experimento:
-![alt text](exp332.png)
 
+<div align="center">
+  <img src="exp332.png" width="70%" alt="Gráfica del experimento con fuerzas virtuales">
+  <br>
+  <em>Figura 11: Evolución del error y par al aplicar fuerzas virtuales</em>
+</div>
 
-
+---
 
 ### 4. Controlador PD en el espacio articular con compensación de dinámicas no lineales
 
@@ -356,4 +392,6 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
-Resultado con PD:
+
+**Resultado con PD:** *(Inserta la imagen o descripción de los resultados aquí si la tienes)*
+````</PDControllerNode></Eigen/Dense>
