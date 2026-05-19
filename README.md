@@ -217,8 +217,15 @@ APARTADO B: Alteraremos los valores de dynamics cancellation.
 
 Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:5.0 y b2:5.0):
 
+![alt text](apartado32exp.png)
+
+Con  (m1:3.0, m2:2.0, l1:1.5, l2:0.2, b1:5.0 y b2:5.0):
+
+![alt text](exp33b2.png)
 
 Con  (m1:3.0, m2:2.0, l1:1.0, l2:0.6, b1:5.0 y b2:5.0):
+
+
 
 
 #### What is the behavior of the robot under the inverse dynamics controller when you apply virtual forces to the EE?
