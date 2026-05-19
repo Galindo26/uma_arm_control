@@ -22,6 +22,7 @@
     add_executable(uma_arm_dynamics src/uma_arm_dynamics.cpp)
     add_executable(gravity_compensation src/gravity_compensation.cpp)
     add_executable(dynamics_cancellation src/dynamics_cancellation.cpp)
+    add_executable(pd_controller_node src/pd_controller_node.cpp)
 
     ament_target_dependencies(uma_arm_dynamics 
       rclcpp
@@ -45,7 +46,12 @@
       geometry_msgs
       Eigen3
     )
-
+    ament_target_dependencies(pd_controller_node 
+      rclcpp
+      std_msgs
+      sensor_msgs
+      Eigen3
+    )
     if(BUILD_TESTING)
       find_package(ament_lint_auto REQUIRED)
       # the following line skips the linter which checks for copyrights
@@ -58,7 +64,7 @@
       ament_lint_auto_find_test_dependencies()
     endif()
 
-    install(TARGETS uma_arm_dynamics dynamics_cancellation gravity_compensation
+    install(TARGETS uma_arm_dynamics dynamics_cancellation gravity_compensation pd_controller_node
       DESTINATION lib/${PROJECT_NAME}
       )
 
