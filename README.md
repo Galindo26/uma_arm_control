@@ -207,14 +207,20 @@ El resultado del experimento es:
 **APARTADO A:** Alteraremos los valores de compensación de gravedad.
 
 
-Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
+Con (m1: 1.0, m2: 3.0, l1: 1.0 y l2: 0.6):
+<div align="center">
+  <img src="compensacion_gravedad1.gif" width="60%" alt="Experimento con longitudes distintas del modelo">
+  <br>
+  <em>Figura 10: Comportamiento del robot bajo fuerzas virtuales aplicadas al EE</em>
+</div>
 
-*(Gráfica de resultados omitida/pendiente)*
+Con (m1: 3.0, m2: 2.0, l1: 2.0 y l2: 0.2):
 
-Con (m1: 3.0, m2: 2.0, l1: 1.0 y l2: 0.6):
-
-*(Gráfica de resultados omitida/pendiente)*
-
+<div align="center">
+  <img src="compensacion_gravedad2.gif" width="60%" alt="Experimento con masas distintas del modelo">
+  <br>
+  <em>Figura 10: Comportamiento del robot bajo fuerzas virtuales aplicadas al EE</em>
+</div>
 
 **APARTADO B:** Alteraremos los valores de cancelación dinámica.
 
